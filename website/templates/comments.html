@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titre %}Témoignages & Commentaires{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/pages/comments.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="comments-page">
+    <section class="comments-header">
+        <span class="subtitle">Ce qu'ils disent de nous</span>
+        <h1>Les avis de notre communauté</h1>
+        <p>Découvrez les retours d'expérience de nos clients et partenaires Green.</p>
+    </section>
+
+    <section class="carousel-section">
+        <div class="carousel-container">
+            <button class="carousel-btn prev-btn" aria-label="Précédent"><i class="ri-arrow-left-s-line"></i></button>
+
+            <div class="carousel-track-container">
+                <div class="carousel-track">
+                    {% for comment in comments %}
+                    <div class="carousel-slide">
+                        <div class="comment-card">
+                            <div class="quote-icon">"</div>
+                            <div class="comment-body"><p>{{ comment.content }}</p></div>
+                            <div class="comment-footer">
+                                <div class="avatar-placeholder">{{ comment.prospect.name|slice:":1"|upper }}{{ comment.prospect.lastname|slice:":1"|upper }}</div>
+                                <div class="user-info">
+                                    <h3>{{ comment.prospect.name }} {{ comment.prospect.lastname }}</h3>
+                                    <span class="user-company">{{ comment.prospect.enterprise_label }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="carousel-slide">
+                        <div class="comment-card empty-comments">
+                            <div class="comment-body"><p>Pas encore de commentaire. Soyez le premier à partager votre expérience.</p></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <button class="carousel-btn next-btn" aria-label="Suivant"><i class="ri-arrow-right-s-line"></i></button>
+        </div>
+        <div class="carousel-nav"></div>
+    </section>
+
+    <section id="add-comment" class="comment-form-section">
+        <div class="comment-form-container">
+            <div class="comment-form-intro">
+                <span class="subtitle">Partagez votre avis</span>
+                <h2>Ajoutez un commentaire</h2>
+            </div>
+            <form method="POST" action="{% url 'comments' %}" class="comment-form">
+                {% csrf_token %}
+                <div class="form-grid">
+                    <div class="form-group"><label>Prénom</label><input type="text" name="name" required></div>
+                    <div class="form-group"><label>Nom</label><input type="text" name="lastname" required></div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group"><label>Entreprise</label><input type="text" name="enterprise_label" required></div>
+                    <div class="form-group"><label>Poste</label><input type="text" name="role" required></div>
+                </div>
+                <div class="form-group"><label>Email</label><input type="email" name="email" required></div>
+                <div class="form-group">
+                    <label>Site web</label>
+                    <input type="text" name="site_web" placeholder="votresite.com" spellcheck="false">
+                </div>
+                <div class="form-group"><label>Votre commentaire</label><textarea name="content" rows="6" required></textarea></div>
+                <div class="comment-form-actions">
+                    <button type="submit" class="btn">Publier le commentaire</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+<script src="{% static 'js/carousel_comments_template.js' %}"></script>
+{% endblock %}

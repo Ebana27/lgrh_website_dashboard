@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% block titre %}Green{% endblock %}{% endblock %}</title>
+    
+    <link rel="icon" href="{% static 'img/svg/logo.svg' %}" type="image/svg+xml" sizes="any">
+    
+    <!-- Police moderne Inter depuis Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS principal (Contient les styles globaux ET la navbar minimaliste) -->
+    <link rel="stylesheet" href="{% static 'css/themes.css' %}">
+
+    <!-- Remixicons links -->
+     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
+
+     <!-- Icone des drapeau -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css" />
+     
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <input type="checkbox" id="site-nav-toggle" class="site-nav-toggle">
+
+    <!-- Header Fixe, Transparent et Minimaliste -->
+    <header class="header">
+        <div class="header-container">
+            
+            <!-- 1. Logo (Gauche) -->
+            <a href="{% url 'home' %}" class="logo">
+                <img src="{% static 'img/svg/logo.svg' %}" alt="Logo Green">
+                <span>Green</span>
+            </a>
+
+            <!-- 2. Navigation centrale (Milieu) -->
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="{% url 'home' %}" class="nav-link">Accueil</a></li>
+                    <li><a href="{% url 'home' %}#func" class="nav-link">Fonctionnalités</a></li>
+                    <li><a href="{% url 'comments' %}" class="nav-link">Témoignages</a></li>
+                    <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+                    <li><a href="{% url 'home' %}#apropos" class="nav-link">A propos</a></li>
+                </ul>
+            </nav>
+
+            <!-- 3. Éléments de droite (Langue + Action principale) -->
+            <div class="header-right">
+                <label for="site-nav-toggle" class="nav-toggle-btn" aria-label="Ouvrir le menu">
+                    <i class="ri-menu-3-line"></i>
+                </label>
+                <div class="lang-selector-container">
+                    <div class="lang-selector">
+                        <span class="fi fi-fr"></span>
+                        <span class="current-lang">FR</span>
+                        <span class="arrow"><i class="ri-arrow-down-s-line"></i></span>
+                    </div>
+                    <div class="lang-dropdown">
+                        <a href="#" class="lang-item active">
+                            <span class="fi fi-fr"></span>
+                            <span>Français</span>
+                        </a>
+                        <a href="#" class="lang-item">
+                            <span class="fi fi-gb"></span>
+                            <span>English</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bouton d'action rectangle noir (Contact / Démo) -->
+                <a href="{% url 'demo' %}" class="btn">Réserver une démo</a>
+            </div>
+
+        </div>
+    </header>
+    <label for="site-nav-toggle" class="nav-backdrop" aria-hidden="true"></label>
+
+    <!-- Zone de Contenu Dynamique -->
+    {% block content %}{% endblock %}
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2024 Green. Tous droits réservés.</p>
+        </div>
+    </footer>
+    <script>
+// Gestion du sélecteur de langue
+const langSelectorContainer = document.querySelector('.lang-selector-container');
+const langSelector = document.querySelector('.lang-selector');
+const langDropdown = document.querySelector('.lang-dropdown');
+
+if (langSelector && langDropdown) {
+    langSelector.addEventListener('click', (event) => {
+        event.stopPropagation();
+        langDropdown.classList.toggle('show');
+    });
+}
+
+// Fermer le menu si clic en dehors du conteneur global du sélecteur
+document.addEventListener('click', (event) => {
+    if (langSelectorContainer && langDropdown && !langSelectorContainer.contains(event.target)) {
+        langDropdown.classList.remove('show');
+    }
+});
+
+// A un certain niveau de scroll, la navbar change de style
+const header = document.querySelector('.header');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+});
+
+const siteNavToggle = document.getElementById('site-nav-toggle');
+document.querySelectorAll('.nav-menu a').forEach((link) => {
+    link.addEventListener('click', () => {
+        if (siteNavToggle) {
+            siteNavToggle.checked = false;
+        }
+    });
+});
+    </script>
+</body>
+</html>

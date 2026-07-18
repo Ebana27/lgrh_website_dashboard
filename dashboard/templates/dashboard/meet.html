@@ -1,0 +1,277 @@
+{% extends 'dashboard/base.html' %}
+{% block title %} | RDV {% endblock %}
+{% block content %}
+<div class="section-card">
+    <div class="section-header" style="margin-bottom: 24px;">
+        <h3>Rendez-vous</h3>
+        <p>Affichage et gestion des rendez-vous les plus récents.</p>
+    </div>
+
+    <div class="table-toolbar" style="display:flex; gap:12px; align-items:center; margin-bottom:16px;">
+        <label style="font-weight:600; color: var(--text-muted);">Filtrer :</label>
+        <select id="status-filter" style="padding:8px 12px; border-radius:8px; border:1px solid var(--border-color); background: var(--bg-sidebar); color: var(--text-main); outline: none;">
+            <option value="all">Tous</option>
+            <option value="en_attente">En attente</option>
+            <option value="confirme">Confirmé</option>
+            <option value="annule">Annulé</option> 
+            <option value="reporte">Reporté</option>
+        </select>
+        <input id="search-prospect" type="search" placeholder="Rechercher prospect..." style="margin-left:auto; padding:8px 12px; border-radius:8px; border:1px solid var(--border-color); background: var(--bg-sidebar); color: var(--text-main); width:240px; outline: none;" />
+    </div>
+
+    <table class="rdv-table table--redesign">
+        <thead>
+            <tr>
+                <th>Prospect</th>
+                <th>Entreprise</th>
+                <th>Site web</th>
+                <th>Statut</th>
+                <th>Téléphone</th>
+                <th>Email</th>
+                <th>Date</th>
+                <th style="width:72px; text-align:center;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rdv in rdv_list %}
+            <tr class="rdv-row" data-rdv-id="{{ rdv.id }}" data-prospect-name="{{ rdv.prospect.name }} {{ rdv.prospect.lastname }}" data-status="{{ rdv.statut|default:'en_attente' }}" style="cursor: pointer;">
+                <td class="font-semibold">{{ rdv.prospect.name }} {{ rdv.prospect.lastname }}</td>
+                <td>{{ rdv.prospect.enterprise_label }}</td>
+                <td>
+                    {% if rdv.prospect.site_web %}
+                        <a href="{{ rdv.prospect.site_web }}" target="_blank" class="table-link">{{ rdv.prospect.site_web }} <i class="ri-external-link-line"></i></a>
+                    {% else %}
+                        <span class="text-muted">-</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if rdv.statut == 'confirme' %}
+                        <span class="status success">Confirmé</span>
+                    {% elif rdv.statut == 'annule' %}
+                        <span class="status danger">Annulé</span>
+                    {% elif rdv.statut == 'reporte' %}
+                        <span class="status warning">Reporté</span>
+                    {% else %}
+                        <span class="status">En attente</span>
+                    {% endif %}
+                </td>
+                <td>{{ rdv.prospect.tel|default:'-' }}</td>
+                <td>{{ rdv.prospect.email|default:'-' }}</td>
+                <td class="date-cell">{{ rdv.date_time|date:"d M Y, H:i" }}</td>
+                <td style="text-align:center;">
+                    <button type="button" class="icon-btn js-open-actions" data-rdv-id="{{ rdv.id }}" title="Actions">
+                        <i class="ri-more-2-line"></i>
+                    </button>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" class="empty-state">
+                    <i class="ri-calendar-line"></i>
+                    Aucun rendez-vous disponible.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- 1. Modal d'actions rapides -->
+<dialog id="rdv-actions-dialog" class="dialog-card">
+    <form id="rdv-actions-form" method="POST" class="dialog-form">
+        {% csrf_token %}
+        <h3 class="dialog-title">Actions pour <span id="rdv-actions-prospect">&nbsp;</span></h3>
+        {% comment %} <span> objectif : {{ rdv_designations }} </span> {% endcomment %}
+ 
+         <p style="color: var(--text-muted); margin-bottom: 12px;font-size: 10pt;">
+            Vous pouvez valider, reporter ou annuler le rendez-vous pour ce prospect. 
+            Veuillez choisir l'action appropriée ci-dessous.
+        </p>
+        <p id="rdv-actions-meta" style="color: var(--text-muted); margin-bottom:12px;"></p>
+        <div style="display:flex; gap:10px; width: 100%;">
+            <button type="submit" class="btn-valider" id="rdv-validate">Valider</button>
+            <button type="button" class="btn-annuler" id="rdv-open-cancel">Annuler</button>
+            <button type="button" class="btn-reporter" id="rdv-open-report">Reporter</button>
+            <button type="button" class="btn-secondary dialog-close" style="margin-left:auto;">Fermer</button>
+        </div>
+    </form>
+</dialog>
+
+<!-- 2. Modal d'annulation -->
+<dialog id="cancel-dialog" class="dialog-card">
+    <form id="cancel-form" method="POST" class="dialog-form">
+        {% csrf_token %}
+        <h3 class="dialog-title">Annuler le rendez-vous</h3>
+        <p style="color: var(--text-muted); margin-bottom: 8px;">Voulez-vous vraiment annuler ce rendez-vous ?</p>
+        <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 500;">
+            Raison de l'annulation
+            <textarea name="reason" placeholder="Motif de l'annulation..." rows="4" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-dashboard); color: var(--text-main); outline: none; resize: vertical;"></textarea>
+        </label>
+        <div class="dialog-actions">
+            <button type="button" class="btn-secondary dialog-close">Retour</button>
+            <button type="submit" class="btn-danger">Confirmer l'annulation</button>
+        </div>
+    </form>
+</dialog>
+
+<!-- 3. Modal de report -->
+<dialog id="report-dialog" class="dialog-card">
+    <form id="report-form" method="POST" class="dialog-form">
+        {% csrf_token %}
+        <h3 class="dialog-title">Reporter le rendez-vous</h3>
+        <p style="color: var(--text-muted); margin-bottom: 8px;">Sélectionnez une nouvelle date ou laissez le prospect choisir.</p>
+        
+        <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 500; margin-bottom: 12px;">
+            Nouvelle date et heure
+            <input id="new-date-input" type="datetime-local" name="new_date_time" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-dashboard); color: var(--text-main); outline: none;" />
+        </label>
+        
+        <fieldset class="dialog-fieldset" style="border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+            <legend style="padding: 0 8px; font-weight: 600; font-size: 0.85rem; color: var(--text-muted);">Choix</legend>
+            <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; cursor: pointer;">
+                <input type="radio" name="reschedule_choice" value="new_date" checked /> Proposer la date choisie
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="radio" name="reschedule_choice" value="prospect_choose" /> Laisser le prospect choisir
+            </label>
+        </fieldset>
+        
+        <div class="dialog-actions">
+            <button type="button" class="btn-secondary dialog-close">Annuler</button>
+            <button type="submit" class="btn-primary">Envoyer la proposition</button>
+        </div>
+    </form>
+</dialog>
+
+<script>
+    (function(){
+        // Sélection des Dialogs
+        const actionsDialog = document.getElementById('rdv-actions-dialog');
+        const cancelDialog = document.getElementById('cancel-dialog');
+        const reportDialog = document.getElementById('report-dialog');
+
+        // Formulaires
+        const actionsForm = document.getElementById('rdv-actions-form');
+        const cancelForm = document.getElementById('cancel-form');
+        const reportForm = document.getElementById('report-form');
+        
+        // Éléments dynamiques
+        const prospectLabel = document.getElementById('rdv-actions-prospect');
+        const reportDateInput = document.getElementById('new-date-input');
+        const reportChoiceInputs = document.querySelectorAll('input[name="reschedule_choice"]');
+
+        // Fonction d'ouverture de la boîte d'actions principales
+        function openActions(rdvId, prospectName){
+            if (!actionsDialog) return;
+            prospectLabel.textContent = prospectName || '';
+            
+            // On injecte l'URL de validation dynamiquement
+            actionsForm.action = `{% url 'dashboard:valider_rdv' 0 %}`.replace('/0/', `/${rdvId}/`);
+            
+            // On stocke l'ID courant sur les boutons de report / annulation
+            document.getElementById('rdv-open-cancel').dataset.rdvId = rdvId;
+            document.getElementById('rdv-open-cancel').dataset.rdvProspect = prospectName;
+            document.getElementById('rdv-open-report').dataset.rdvId = rdvId;
+            document.getElementById('rdv-open-report').dataset.rdvProspect = prospectName;
+            
+            actionsDialog.showModal();
+        }
+
+        // Clic sur une ligne du tableau
+        document.querySelectorAll('.rdv-row').forEach(row => {
+            row.addEventListener('click', function(e){
+                if (e.target.closest('.js-open-actions') || e.target.closest('a')) return;
+                const id = this.dataset.rdvId;
+                const name = this.dataset.prospectName;
+                openActions(id, name);
+            });
+        });
+
+        // Clic sur l'icône "Action" (les 3 points)
+        document.querySelectorAll('.js-open-actions').forEach(btn => {
+            btn.addEventListener('click', function(e){
+                e.stopPropagation();
+                const id = this.dataset.rdvId;
+                const row = document.querySelector(`.rdv-row[data-rdv-id="${id}"]`);
+                const name = row ? row.dataset.prospectName : '';
+                openActions(id, name);
+            });
+        });
+
+        // Ouvrir la modale d'annulation
+        document.getElementById('rdv-open-cancel').addEventListener('click', function(){
+            const rdvId = this.dataset.rdvId;
+            const prospectName = this.dataset.rdvProspect;
+            cancelForm.action = `{% url 'dashboard:annuler_rdv' 0 %}`.replace('/0/', `/${rdvId}/`);
+            if(cancelDialog.querySelector('.dialog-title')) {
+                cancelDialog.querySelector('.dialog-title').textContent = `Annuler le RDV de ${prospectName}`;
+            }
+            actionsDialog.close();
+            cancelDialog.showModal();
+        });
+
+        // Ouvrir la modale de report
+        document.getElementById('rdv-open-report').addEventListener('click', function(){
+            const rdvId = this.dataset.rdvId;
+            const prospectName = this.dataset.rdvProspect;
+            reportForm.action = `{% url 'dashboard:reporter_rdv' 0 %}`.replace('/0/', `/${rdvId}/`);
+            if(reportDialog.querySelector('.dialog-title')) {
+                reportDialog.querySelector('.dialog-title').textContent = `Reporter le RDV de ${prospectName}`;
+            }
+            actionsDialog.close();
+            reportDialog.showModal();
+        });
+
+        // Fermeture générique de toutes les modales
+        document.querySelectorAll('.dialog-close').forEach(btn => {
+            btn.addEventListener('click', function(){
+                this.closest('dialog')?.close();
+            });
+        });
+
+        // Fermer en cliquant à l'extérieur de la modale (Backdrop click)
+        [actionsDialog, cancelDialog, reportDialog].forEach(modal => {
+            modal?.addEventListener('click', function(e) {
+                const rect = modal.getBoundingClientRect();
+                const isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+                  rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+                if (!isInDialog) {
+                    modal.close();
+                }
+            });
+        });
+
+        // Désactivation de l'input date si choix prospect
+        reportChoiceInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                if (this.value === 'prospect_choose') {
+                    reportDateInput?.setAttribute('disabled', 'disabled');
+                } else {
+                    reportDateInput?.removeAttribute('disabled');
+                }
+            });
+        });
+
+        // Logique de filtrage et recherche locale
+        const statusFilter = document.getElementById('status-filter');
+        const searchInput = document.getElementById('search-prospect');
+
+        function applyFilters(){
+            const s = statusFilter.value;
+            const q = searchInput.value.trim().toLowerCase();
+            document.querySelectorAll('.rdv-row').forEach(row => {
+                const status = (row.dataset.status || '').toLowerCase();
+                const name = (row.dataset.prospectName || '').toLowerCase();
+                
+                const matchStatus = (s === 'all') || (status === s);
+                const matchQuery = !q || name.indexOf(q) !== -1;
+                
+                row.style.display = (matchStatus && matchQuery) ? '' : 'none';
+            });
+        }
+
+        statusFilter?.addEventListener('change', applyFilters);
+        searchInput?.addEventListener('input', applyFilters);
+    })();
+</script>
+{% endblock %}

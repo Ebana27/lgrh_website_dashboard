@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation</title>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #ffffff; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+        
+        .confirmation-container {
+            max-width: 500px;
+            padding: 60px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        h1 { 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            color: #000; 
+            margin-bottom: 30px; 
+            letter-spacing: -0.02em;
+        }
+
+        .btn-home {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            border-radius: 0; /* Design strict sans arrondis */
+            transition: background 0.2s;
+        }
+
+        .btn-home:hover { background: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="confirmation-container">
+        <h1>Bienvenue prospect : {{ p.name }} {{ p.lastname }}</h1>
+        <a href="{% url 'home' %}" class="btn-home">Retourner à l'accueil</a>
+    </div>
+
+</body>
+</html>

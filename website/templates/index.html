@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<!-- CSS propre à la page d'accueil -->
+<link rel="stylesheet" href="{% static 'css/pages/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="hero-wrapper">
+    <!-- La forme/carte minimaliste qui encapsule l'image et le texte -->
+    <div class="hero-card">
+        <!-- Contenu textuel et boutons à l'intérieur de la carte -->
+        <div class="hero-content">
+            <h1 class="hero-title">Green, logiciel de gestion de ressources humaines.</h1>
+            <p class="hero-subtitle">Pour les entreprises et divers organismes.</p>
+            
+            <!-- Groupe de deux boutons -->
+            <div class="hero-buttons">
+                <a href="{% url 'demo' %}" class="btn btn-discover">Découvrir Green</a>
+                <a href="#" class="btn btn-watch-demo">
+                    <svg class="play-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <path d="M10 8L16 12L10 16V8Z" fill="currentColor"/>
+                    </svg>
+                    Voir la démo
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% comment %} Section Problème / Solution de Green {% endcomment %}
+<section id="func" class="problem-solution-section">
+    <div class="section-container">
+        
+        <!-- BLOC 1 : LE PROBLÈME -->
+        <div class="narrative-row problem-row">
+            <div class="narrative-text">
+                <span class="narrative-tag text-danger">Le Constat</span>
+                <h2 class="narrative-title">Vos équipes perdent leur temps dans l'administratif.</h2>
+                <p class="narrative-description">
+                    Fichiers Excel éparpillés, demandes de congés perdues dans les e-mails, manque de clarté sur les effectifs... 
+                    La gestion humaine artisanale crée de la friction, ralentit vos managers et frustre vos collaborateurs au quotidien.
+                </p>
+            </div>
+            <div class="narrative-visual">
+                <!-- Image ou illustration épurée symbolisant le chaos administratif ou la perte de temps -->
+                <div class="visual-placeholder pattern-problem">
+                    <span class="visual-label">Désorganisation & Processus éparpillés</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESPACEMENT / TRANSITION -->
+        <div class="narrative-divider"></div>
+
+        <!-- BLOC 2 : LA SOLUTION (GREEN) -->
+        <div class="narrative-row solution-row">
+            <div class="narrative-visual">
+                <!-- Ici, une vue rapprochée ou un focus propre de l'interface du logiciel (ex: le module congés ou planning) -->
+                <img src="{% static 'img/chrome_laptop_hr_dashboard.png' %}" alt="Interface Green RH" class="solution-image">
+            </div>
+            <div class="narrative-text">
+                <span class="narrative-tag text-success">Notre Solution</span>
+                <h2 class="narrative-title">Centraliser, automatiser et piloter en un seul endroit.</h2>
+                <p class="narrative-description">
+                    Green rassemble l'ensemble de votre écosystème RH sur une plateforme unique. En automatisant les tâches répétitives (calcul des soldes, validations, fiches profils), nous redonnons à vos équipes le temps de se concentrer sur ce qui compte vraiment : l'humain.
+                </p>
+                <a href="{% url 'demo' %}" class="btn btn-outline">Voir comment ça marche</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% comment %} Section Témoignages {% endcomment %}
+<section id="testimonials" class="testimonials-section">
+    <div class="section-container">
+        <h2 class="section-title">Ils nous font confiance</h2>
+        <p class="section-subtitle">Découvrez comment Green a transformé la gestion RH de nos clients.</p>
+
+        <div class="carousel-wrapper">
+            <button class="carousel-btn prev" aria-label="Precedent">&#10094;</button>
+
+            <div class="carousel-track-container">
+                <ul class="carousel-track">
+                    {% for comment in comments %}
+                    <li class="testimonial-card">
+                        <div class="card-content">
+                            <div class="quote-icon">"</div>
+                            <p class="testimonial-text">{{ comment.content }}</p>
+                        </div>
+
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                {{ comment.prospect.name|make_list|first }}{{ comment.prospect.lastname|make_list|first }}
+                            </div>
+                            <div class="author-info">
+                                <span class="author-name">{{ comment.prospect.name }} {{ comment.prospect.lastname }}</span>
+                                <span class="author-position">{{ comment.prospect.role }} chez {{ comment.prospect.enterprise_label }}</span>
+                            </div>
+                        </div>
+                    </li>
+                    {% empty %}
+                    <li class="testimonial-card empty-card">
+                        <div class="card-content">
+                            <div class="quote-icon">"</div>
+                            <p class="testimonial-text">Pas encore de commentaire. Soyez le premier à partager votre expérience avec Green.</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <span class="author-name">Votre retour compte</span>
+                                <span class="author-position">Aidez les prochains visiteurs</span>
+                            </div>
+                        </div>
+                        <!-- Bouton avec angle droit -->
+                        <a class="btn btn-outline" style="margin-top: 20px; display: inline-block;" href="{% url 'comments' %}#add-comment">Ajouter un commentaire</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <button class="carousel-btn next" aria-label="Suivant">&#10095;</button>
+        </div>
+
+        <div class="carousel-nav"></div>
+    </div>
+</section>
+
+{% comment %} Section Invitation au Contact (Avec Illustration) {% endcomment %}
+<section id="contact-invite" class="contact-invite-section">
+    <div class="contact-invite-container">
+        
+        <div class="contact-invite-text">
+            <h2 class="section-title">Une question, une idée, un contretemps ?</h2>
+            <p class="section-subtitle">
+                Que vous rencontriez un souci technique, que vous ayez des suggestions pour améliorer notre plateforme, ou que vous ayez simplement besoin d'aide, notre équipe est à votre entière disposition.
+            </p>
+            <a href="{% url 'contact' %}" class="btn invite-btn">Accéder au formulaire de contact</a>
+        </div>
+
+        <div class="contact-invite-image">
+            <!-- Remplace le src par ton illustration minimaliste -->
+            <img src="{% static 'img/2.png' %}" alt="Support Client Green">
+        </div>
+
+    </div>
+</section>
+
+{% comment %} Section A propos avec les balise summary {% endcomment %}
+<section id="about" class="about-section">
+    <div class="section-container" id="apropos">
+        <h2 class="section-title">À propos de Green</h2>
+        <p class="section-subtitle">Nous transformons la complexité administrative en simplicité opérationnelle.</p>
+
+        <div class="about-content">
+            <details>
+                <summary>Notre histoire</summary>
+                <p>Green a été fondé en 2020 par une équipe passionnée par l'optimisation des processus RH. Nous avons constaté que de nombreuses entreprises perdaient un temps précieux dans des tâches administratives répétitives, et nous avons conçu une solution structurée pour y remédier durablement.</p>
+            </details>
+
+            <details>
+                <summary>Notre mission</summary>
+                <p>Nous fournissons un logiciel intuitif qui centralise toutes les fonctions RH. Notre objectif est de libérer les équipes de la charge administrative pour qu'elles se concentrent sur ce qui compte vraiment : le développement, la valorisation et le bien-être des collaborateurs.</p>
+            </details>
+
+            <details>
+                <summary>Nos valeurs fondamentales</summary>
+                <p>Nous plaçons la transparence, la rigueur technique et l'efficacité au cœur de nos développements. Nous croyons fermement que des outils numériques bien pensés sont le socle d'une gestion humaine saine et performante.</p>
+            </details>
+
+            <details>
+                <summary>Pourquoi choisir Green ?</summary>
+                <p>Contrairement aux solutions généralistes, Green est spécifiquement architecturé pour répondre aux défis des organisations modernes. Notre interface est pensée pour réduire la friction cognitive, accélérer la prise de décision et garantir la conformité de vos données RH.</p>
+            </details>
+
+            <details>
+                <summary>Notre équipe</summary>
+                <p>Nous sommes une équipe diversifiée d'experts en développement full-stack, en gestion RH et en design d'interface. Chaque fonctionnalité que nous intégrons est le résultat d'une écoute active des besoins réels de nos utilisateurs sur le terrain.</p>
+            </details>
+
+            <details>
+                <summary>Comment annuler une demo ?</summary>
+                <p>Pour annuler une demande de démonstration ou choisir de la reporter acceder au formulaire de contact et saisisser votre demande.</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.querySelector('.carousel-track');
+    if (!track) return;
+
+    const slides = Array.from(track.children);
+    const nextButton = document.querySelector('.carousel-btn.next');
+    const prevButton = document.querySelector('.carousel-btn.prev');
+    const dotsNav = document.querySelector('.carousel-nav');
+
+    if (!dotsNav) return;
+
+    if (slides.length <= 1) {
+        if (nextButton) nextButton.style.display = 'none';
+        if (prevButton) prevButton.style.display = 'none';
+        return;
+    }
+
+    slides.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.classList.add('carousel-dot');
+        if (index === 0) dot.classList.add('current-slide');
+        dotsNav.appendChild(dot);
+    });
+
+    const dots = Array.from(dotsNav.children);
+    let currentIndex = 0;
+
+    const updateSlidePosition = () => {
+        track.style.transform = 'translateX(-' + currentIndex * 100 + '%)';
+
+        dots.forEach(dot => dot.classList.remove('current-slide'));
+        if (dots[currentIndex]) {
+            dots[currentIndex].classList.add('current-slide');
+        }
+    };
+
+    nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateSlidePosition();
+    });
+
+    prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateSlidePosition();
+    });
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentIndex = index;
+            updateSlidePosition();
+        });
+    });
+});
+</script>
+{% endblock %}

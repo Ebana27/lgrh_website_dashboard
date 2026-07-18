@@ -1,0 +1,109 @@
+{% extends 'dashboard/base.html' %}
+{% block title %} | Prospects {% endblock %}
+
+{% block content %}
+<div class="dashboard-hero">
+    <div>
+        <h1>Prospects</h1>
+        <p>Derniers prospects enregistrés via le site.</p>
+    </div>
+</div>
+
+<div class="page-grid">
+    <main>
+        <section class="page-card">
+            <div class="page-card__header">
+                <h2 class="section-title"><i class="ri-user-line"></i> Liste des prospects</h2>
+            </div>
+
+            <div class="page-table-wrap">
+                <table class="page-table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Entreprise</th>
+                            <th>Site web</th>
+                            <th>Rôle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prospect in prospects %}
+                        <tr>
+                            <td>{{ prospect.name }} {{ prospect.lastname }}</td>
+                            <td>{{ prospect.email }}</td>
+                            <td>{{ prospect.tel|default:'-' }}</td>
+                            <td>{{ prospect.enterprise_label }}</td>
+                            <td>{% if prospect.site_web %}<a href="{{ prospect.site_web }}" target="_blank" rel="noopener">{{ prospect.site_web }}</a>{% else %}-{% endif %}</td>
+                            <td>{{ prospect.role }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="page-empty">Aucun prospect trouvé.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <aside>
+        <section class="page-card">
+            <div class="page-card__header">
+                <h3>Actions rapides</h3>
+                {% if prospects %}
+                    <span class="page-badge">Priorité : {{ prospects.0.name }}</span>
+                {% endif %}
+            </div>
+
+            {% if prospects %}
+                {% with first=prospects.0 %}
+                <div class="page-card__body quick-actions-box" data-prospect-name="{{ first.name }} {{ first.lastname }}" data-prospect-email="{{ first.email|default:'' }}" data-prospect-tel="{{ first.tel|default:'' }}" data-company="{{ first.enterprise_label|default:'' }}">
+                    <button type="button" class="quick-action-btn js-call"><i class="ri-phone-line"></i> Appeler</button>
+                    <button type="button" class="quick-action-btn js-email"><i class="ri-mail-line"></i> Email</button>
+                    <button type="button" class="quick-action-btn js-verify-company"><i class="ri-search-2-line"></i> Vérifier</button>
+                    <button type="button" class="quick-action-btn js-linkedin"><i class="ri-linkedin-box-line"></i> LinkedIn</button>
+                </div>
+                {% endwith %}
+            {% else %}
+                <div class="page-card__body">
+                    <p class="page-muted">Ajoute un prospect pour activer les actions rapides.</p>
+                </div>
+            {% endif %}
+        </section>
+    </aside>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const actionsBox = document.querySelector('.quick-actions-box');
+        if (!actionsBox) return;
+
+        const getData = (key) => actionsBox.getAttribute(`data-${key}`) || '';
+
+        document.querySelector('.js-call')?.addEventListener('click', () => {
+            const tel = getData('prospect-tel');
+            if (tel) window.location.href = `tel:${tel}`;
+            else alert('Aucun numéro de téléphone disponible.');
+        });
+
+        document.querySelector('.js-email')?.addEventListener('click', () => {
+            const email = getData('prospect-email');
+            if (email) window.location.href = `mailto:${email}`;
+            else alert('Aucune adresse e-mail disponible.');
+        });
+
+        document.querySelector('.js-verify-company')?.addEventListener('click', () => {
+            const company = getData('company') || prompt("Nom de l'entreprise :");
+            if (company) window.open(`https://www.google.com/search?q=${encodeURIComponent(company)}`, '_blank', 'noopener');
+        });
+
+        document.querySelector('.js-linkedin')?.addEventListener('click', () => {
+            const company = getData('company') || prompt("Nom de l'entreprise :");
+            if (company) window.open(`https://www.linkedin.com/search/results/all/?keywords=${encodeURIComponent(company)}`, '_blank', 'noopener');
+        });
+    });
+</script>
+{% endblock %}

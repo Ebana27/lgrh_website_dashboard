@@ -1,0 +1,299 @@
+/* ==========================================================================
+   PAGE COMMENTAIRES
+   Carousel géométrique proche de la maquette fournie
+   ========================================================================== */
+.comments-page {
+    background: #ffffff;
+}
+
+.comments-header {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 120px 20px 32px;
+    text-align: center;
+}
+
+.comments-header .subtitle {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+}
+
+.comments-header h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #000;
+    letter-spacing: -0.05em;
+    line-height: 1.05;
+    margin-bottom: 14px;
+}
+
+.comments-header p {
+    color: #64748b;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+/* Carousel */
+.carousel-section {
+    padding: 32px 20px 96px;
+}
+
+.carousel-container {
+    position: relative;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 52px;
+}
+
+.carousel-track-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.carousel-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.comment-card {
+    position: relative;
+    min-height: 228px;
+    border: 1px solid #dbe4f0;
+    background: #ffffff;
+    padding: 40px 44px 36px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.comment-card.empty-comments {
+    display: flex;
+    align-items: center;
+}
+
+.quote-icon {
+    display: none;
+}
+
+.comment-body p {
+    margin: 0;
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: #111827;
+    max-width: 720px;
+}
+
+.comment-footer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 28px;
+}
+
+.avatar-placeholder {
+    width: 52px;
+    height: 52px;
+    background: #000;
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 1rem;
+    flex: 0 0 auto;
+}
+
+.user-info h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.user-company {
+    display: inline-block;
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 0.92rem;
+}
+
+.empty-comments .comment-body p {
+    max-width: 560px;
+    color: #475569;
+}
+
+/* Boutons de navigation */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #111827;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.carousel-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.carousel-btn i {
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+.prev-btn {
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+
+.next-btn {
+    right: 0;
+    transform: translate(50%, -50%);
+}
+
+/* Indicateurs rectangles comme sur la capture */
+.carousel-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 44px;
+}
+
+.carousel-indicator {
+    width: 60px;
+    height: 32px;
+    border: 1px solid #111;
+    background: #ffffff;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.carousel-indicator.active {
+    background: #000000;
+    border-color: #000000;
+}
+
+/* Formulaire */
+.comment-form-section {
+    padding: 0 20px 120px;
+}
+
+.comment-form-container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 44px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+}
+
+.comment-form-intro {
+    margin-bottom: 28px;
+}
+
+.comment-form-intro h2 {
+    font-size: 2rem;
+    margin-top: 8px;
+    color: #111827;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dbe4f0;
+    outline: none;
+    border-radius: 0;
+    background: #ffffff;
+    box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #000;
+}
+
+.comment-form-actions .btn {
+    padding: 15px 30px;
+    background: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .comments-header {
+        padding-top: 100px;
+    }
+
+    .carousel-section {
+        padding-bottom: 72px;
+    }
+
+    .carousel-container {
+        padding: 0;
+    }
+
+    .carousel-btn {
+        display: none;
+    }
+
+    .comment-card {
+        padding: 28px 22px;
+        min-height: 0;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .comment-form-container {
+        padding: 28px 20px;
+    }
+
+    .carousel-indicator {
+        width: 44px;
+        height: 28px;
+    }
+}

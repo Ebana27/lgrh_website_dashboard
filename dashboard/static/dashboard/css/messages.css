@@ -1,0 +1,130 @@
+/* ==========================================================================
+   MESSAGES STYLESHEET (messages.css)
+   ========================================================================== */
+
+/* Carte principale de la section */
+.section-card {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+    margin-bottom: 24px;
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.section-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.section-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+/* Structure du tableau des messages */
+.messages-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.messages-table th {
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Alignement vertical en haut pour un meilleur confort de lecture */
+.messages-table td {
+    padding: 18px 16px;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: top;
+}
+
+.messages-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Effet au survol */
+.messages-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.messages-table tbody tr:hover {
+    background-color: var(--bg-dashboard);
+}
+
+/* Nom de l'expéditeur */
+.messages-table td:nth-child(1) {
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--text-main);
+}
+
+/* Email de l'expéditeur */
+.messages-table td:nth-child(2) {
+    color: var(--primary-color);
+    font-weight: 500;
+    word-break: break-all;
+}
+
+/* Corps du message (préserve les retours à la ligne de l'expéditeur) */
+.messages-table td:nth-child(3) {
+    color: var(--text-main);
+    max-width: 400px;
+    line-height: 1.6;
+    word-break: break-word;
+    white-space: pre-line; /* Permet de conserver les paragraphes du message d'origine */
+}
+
+/* Colonne Date */
+.messages-table td:nth-child(4) {
+    white-space: nowrap;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* --- OPTIONNEL : Styles pour l'action de suppression (delete_message) --- */
+.action-cell {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+.btn-delete-msg {
+    background: transparent;
+    border: none;
+    color: #ef4444; /* Rouge standard */
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-delete-msg:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #b91c1c;
+    transform: scale(1.05);
+}
+
+/* État vide */
+.messages-table .empty-state {
+    text-align: center;
+    padding: 48px 16px !important;
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.95rem;
+}

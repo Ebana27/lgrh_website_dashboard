@@ -1,0 +1,723 @@
+/* ==========================================================================
+   SECTION HERO CONTENEUR & FORME (STYLE CAPSULE DE LA MAQUETTE)
+   ========================================================================== */
+@import url('../themes.css');
+
+/* Conteneur global sur fond blanc ou gris très clair de la plateforme */
+.hero-wrapper {
+    width: 100%;
+    /* Utilise la hauteur du header définie globalement pour un espacement parfait */
+    padding: calc(var(--header-height) + 24px) 40px 40px 40px; 
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* La forme arrondie qui contient l'image du dashboard */
+.hero-card {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    height: 75vh; /* Hauteur harmonieuse et contenue */
+    border-radius: 40px; /* Grands angles arrondis ultra-modernes */
+    
+    /* Intégration de l'image de l'ordinateur en fond de la forme */
+    background-image: url('../../img/chrome_laptop_hr_dashboard.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Alignement interne du texte au centre */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* 
+   L'OVERLAY CORRECTEMENT CONFIGURÉ
+   Il se superpose à l'image mais reste sous le texte 
+*/
+.hero-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Un voile sombre de 45% pour faire ressortir le texte blanc */
+    background-color: rgba(0, 0, 0, 0.45); 
+    z-index: 1; /* Couche intermédiaire */
+}
+
+/* Conteneur de texte et actions (Passé au-dessus de l'overlay) */
+.hero-content {
+    position: relative;
+    z-index: 2; /* Force le texte à passer au-dessus de l'overlay (z-index: 1) */
+    max-width: 850px;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px; /* Espacement aéré minimaliste */
+}
+
+/* Titre Principal (Blanc éclatant pour contraster avec le voile sombre) */
+.hero-title {
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
+    font-weight: 700;
+    color: #ffffff; 
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
+
+/* Sous-titre (Légèrement estompé pour la hiérarchie visuelle) */
+.hero-subtitle {
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.1px;
+}
+
+/* Conteneur des deux boutons */
+.hero-buttons {
+    display: flex;
+    align-items: center;
+    gap: 24px; /* Espace généreux entre les deux boutons */
+}
+
+/* Bouton 1 : Rectangle Blanc (Découvrir) pour trancher sur le fond sombre */
+.btn-discover {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 14px 32px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 0px; /* Rectangle strict */
+    letter-spacing: 0.3px;
+    transition: background-color var(--transition-fast), transform 0.1s ease;
+}
+
+.btn-discover:hover {
+    background-color: #f0f0f0;
+}
+
+/* Bouton 2 : Lien Épuré Blanc + Icône (Voir la démo) */
+.btn-watch-demo {
+    background-color: transparent;
+    color: #ffffff;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: opacity var(--transition-fast);
+}
+
+.btn-watch-demo:hover {
+    opacity: 0.8;
+}
+
+/* Icône de lecture SVG */
+.play-icon {
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+}
+
+/* Responsive pour les petits écrans */
+@media (max-width: 768px) {
+    .hero-wrapper {
+        padding: calc(var(--header-height) + 12px) 12px 12px 12px;
+    }
+    .hero-card {
+        border-radius: 24px;
+        height: 60vh;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+
+
+
+/* ==========================================================================
+   SECTION PROBLÈME / SOLUTION (NARRATIVE RH)
+   ========================================================================== */
+.problem-solution-section {
+    width: 100%;
+    padding: 120px 40px; /* Très grand espace pour laisser respirer l'histoire */
+    background-color: #ffffff;
+}
+
+.section-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Ligne narrative de base */
+.narrative-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 64px;
+}
+
+/* Inversion de l'ordre pour la solution (image à gauche, texte à droite) */
+.solution-row {
+    flex-direction: row-reverse;
+}
+
+/* Blocs de texte */
+.narrative-text {
+    flex: 1;
+    max-width: 500px;
+}
+
+.narrative-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+
+.text-danger { color: #bc2f2f; }
+.text-success { color: #3ecc43; } /* Ton vert Green */
+
+.narrative-title {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700;
+    color: #1f1e1e;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+}
+
+.narrative-description {
+    font-size: 16px;
+    color: #555555;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+/* Blocs visuels */
+.narrative-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style de l'image de la solution */
+.solution-image {
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06); /* Ombre très douce */
+}
+
+/* Placeholder épuré pour le problème (en attendant une vraie illustration/icône) */
+.visual-placeholder {
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    background-color: #fcfcfc;
+    border: 1px dashed #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888888;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Bouton secondaire minimaliste pour la ligne d'action */
+.btn-outline {
+    background-color: transparent;
+    color: #000000;
+    border: 1px solid #000000;
+    padding: 12px 28px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 0px;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-outline:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   SECTION PARTENAIRES & LOGOS
+   ========================================================================== */
+.partners-section {
+    padding: 40px 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #eaeaea;
+    text-align: center;
+}
+
+.partners-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+}
+
+.partners-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.partners-logos:hover {
+    opacity: 1;
+}
+
+.partner-logo {
+    height: 30px;
+    width: auto;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.partner-logo:hover {
+    filter: grayscale(0%);
+}
+
+.airtel-logo {
+    height: 40px;
+}
+/* ========================================================================== 
+   SECTION TÉMOIGNAGES (Refonte Minimaliste & Géométrique)
+   ========================================================================== */
+.testimonials-section {
+    padding: 100px 20px;
+    background-color: #fcfcfc; /* Fond très légèrement gris pour détacher du blanc pur */
+    font-family: 'Inter', sans-serif;
+    border-top: 1px solid #eaeaea;
+}
+
+.testimonials-section .section-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.testimonials-section .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 15px;
+}
+
+.testimonials-section .section-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 60px;
+}
+
+/* Base du Carousel */
+.carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-track-container {
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+}
+
+.carousel-track {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* Animation plus fluide et professionnelle */
+}
+
+/* Carte de témoignage : Adieu ombres et arrondis */
+.testimonial-card {
+    min-width: 100%;
+    background: #ffffff;
+    border: 1px solid #eaeaea; /* Bordure nette à la place de l'ombre */
+    border-radius: 0px; /* Strictement rectangulaire */
+    padding: 50px;
+    text-align: left;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-content {
+    position: relative;
+}
+
+.quote-icon {
+    font-family: 'Poppins', sans-serif;
+    font-size: 5rem;
+    color: #f0f0f0; /* Gris très clair pour ne pas gêner la lecture */
+    position: absolute;
+    top: -30px;
+    left: -15px;
+    line-height: 1;
+    font-weight: 700;
+    z-index: 1;
+}
+
+.testimonial-text {
+    font-size: 1.15rem;
+    color: #111;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Bloc Auteur séparé par une ligne subtile */
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eaeaea;
+    padding-top: 25px;
+}
+
+/* Avatar carré (suppression du border-radius) */
+.author-avatar {
+    width: 48px;
+    height: 48px;
+    background-color: #111;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    border-radius: 0px; /* Carré strict */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-name {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #111;
+    font-size: 1rem;
+}
+
+.author-position {
+    font-size: 0.85rem;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Flèches de navigation */
+.carousel-btn {
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #111;
+    cursor: pointer;
+    border-radius: 0px; /* Boutons carrés */
+    transition: background-color 0.3s, border-color 0.3s;
+    position: absolute;
+    z-index: 10;
+}
+
+.carousel-btn:hover {
+    background-color: #f5f5f5;
+    border-color: #111;
+}
+
+.carousel-btn.prev {
+    left: -22px; /* Chevauche légèrement le bord */
+}
+
+.carousel-btn.next {
+    right: -22px;
+}
+
+/* Navigation par lignes géométriques au lieu de points ronds */
+.carousel-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 40px;
+}
+
+.carousel-dot {
+    width: 30px; /* Un tiret large */
+    height: 3px; /* Très fin */
+    border-radius: 0px; /* Pas d'arrondi */
+    background: #e0e0e0;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-dot.current-slide {
+    background: #111; /* Le tiret actif devient noir */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .testimonials-section {
+        padding: 60px 20px;
+    }
+
+    .testimonial-card {
+        padding: 30px;
+    }
+
+    .quote-icon {
+        font-size: 4rem;
+        left: 0;
+        top: -20px;
+    }
+
+    .carousel-btn {
+        display: none; /* Masqué sur mobile, on garde les tirets */
+    }
+}
+
+/* ==========================================================================
+   SECTION INVITATION CONTACT (Layout Scindé avec Image)
+   ========================================================================== */
+.contact-invite-section {
+    padding: 100px 20px;
+    background-color: var(--background-color);
+    border-top: 1px solid var(--line);
+}
+
+.contact-invite-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+/* --- COLONNE GAUCHE : TEXTE --- */
+.contact-invite-text {
+    flex: 1;
+    text-align: left;
+}
+
+.contact-invite-text .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.contact-invite-text .section-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.invite-btn {
+    padding: 16px 36px;
+    font-size: 1.15rem;
+    display: inline-block;
+    border-radius: 0; /* Design géométrique strict */
+    text-decoration: none;
+}
+
+/* --- COLONNE DROITE : IMAGE --- */
+.contact-invite-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.contact-invite-image img {
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* --- RESPONSIVE (Tablettes & Mobiles) --- */
+@media (max-width: 992px) {
+    .contact-invite-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 50px;
+    }
+    
+    .contact-invite-text {
+        text-align: center;
+        order: 1;
+    }
+    
+    .contact-invite-image {
+        justify-content: center;
+        order: 2;
+    }
+}
+/* ==========================================================================
+   SECTION À PROPOS (Foire Aux Questions / Accordéon)
+   ========================================================================== */
+.about-section {
+    padding: 80px 20px;
+    background-color: #ffffff;
+    font-family: 'Inter', sans-serif;
+}
+
+.about-section .section-container {
+    max-width: 800px; /* Plus étroit pour une lecture optimale des textes */
+    margin: 0 auto;
+}
+
+.about-section .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #111;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.about-section .section-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 50px;
+    line-height: 1.6;
+}
+
+/* Conteneur des éléments details */
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espace entre chaque bloc */
+}
+
+/* Style de la balise native <details> */
+details {
+    background-color: #fcfcfc;
+    border: 1px solid #eaeaea;
+    border-radius: 0px; /* Bords rectangulaires stricts */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* État actif (ouvert) */
+details[open] {
+    background-color: #ffffff;
+    border-color: #111; /* Le bord devient noir pour marquer l'ouverture */
+}
+
+/* Style du titre cliquable <summary> */
+summary {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #111;
+    padding: 20px;
+    cursor: pointer;
+    list-style: none; /* Masque la flèche native sur Firefox/Chrome */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Masque la flèche native spécifique aux navigateurs Webkit (Safari/Chrome ancien) */
+summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Ajout d'une icône "+" personnalisée */
+summary::after {
+    content: '+';
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #111;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+/* Rotation et transformation en "-" quand c'est ouvert */
+details[open] summary::after {
+    content: '−'; /* Signe moins typographique */
+    transform: rotate(180deg);
+}
+
+/* Style du texte à l'intérieur */
+details p {
+    padding: 0 20px 20px 20px;
+    margin: 0;
+    color: #555;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Ligne de séparation interne quand ouvert */
+details[open] p {
+    border-top: 1px solid #eaeaea;
+    padding-top: 20px;
+    margin-top: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .about-section {
+        padding: 60px 20px;
+    }
+    
+    .about-section .section-title {
+        font-size: 1.8rem;
+    }
+    
+    summary {
+        font-size: 1rem;
+        padding: 15px;
+    }
+    
+    details p {
+        padding: 0 15px 15px 15px;
+    }
+}

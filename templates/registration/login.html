@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Green</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --surface: #ffffff;
+            --surface-alt: #f8fafc;
+            --text-main: #000000;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background:
+                radial-gradient(circle at top left, rgba(15, 23, 42, 0.04), transparent 32%),
+                radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.06), transparent 28%),
+                var(--surface-alt);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .login-shell {
+            width: min(980px, 100%);
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            border: 1px solid var(--border-color);
+            border-radius: 0;
+            background: var(--surface);
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.06);
+            overflow: hidden;
+        }
+
+        .login-art {
+            padding: 40px;
+            border-right: 1px solid var(--border-color);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.96)),
+                url('https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 560px;
+        }
+
+        .brand {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-main);
+        }
+
+        .login-art h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            color: #0f172a;
+            max-width: 12ch;
+        }
+
+        .login-art p {
+            max-width: 36ch;
+            color: #334155;
+            line-height: 1.7;
+            margin-top: 14px;
+        }
+
+        .login-meta {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .login-panel {
+            position: relative;
+            padding: 56px 56px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .access-note {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: 0;
+            color: var(--text-muted);
+            background: var(--surface);
+        }
+
+        .login-panel h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 28px;
+            max-width: 40ch;
+        }
+
+        form {
+            display: grid;
+            gap: 14px;
+        }
+
+        .field {
+            display: grid;
+            gap: 8px;
+        }
+
+        .field label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            min-height: 48px;
+            padding: 0 14px 0 42px;
+            border: 1px solid var(--border-color);
+            border-radius: 0;
+            outline: none;
+            background: #ffffff;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #000000;
+        }
+
+        .errorlist {
+            list-style: none;
+            color: #991b1b;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            padding: 10px 12px;
+            border-radius: 0;
+            font-size: 0.82rem;
+        }
+
+        .extra-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .extra-row a {
+            color: var(--text-main);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .btn-submit {
+            min-height: 48px;
+            margin-top: 10px;
+            border: 1px solid #000000;
+            border-radius: 0;
+            background: #000000;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.18s ease, opacity 0.18s ease;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.92;
+        }
+
+        .login-foot {
+            margin-top: 18px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .hidden-next {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .login-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .login-art {
+                min-height: 260px;
+                border-right: 0;
+                border-bottom: 1px solid var(--border-color);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .login-panel,
+            .login-art {
+                padding: 28px 22px;
+            }
+
+            .login-panel h2 {
+                font-size: 1.55rem;
+            }
+
+            .extra-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="login-shell">
+        <section class="login-art" aria-label="Présentation Green">
+            <div class="brand">Green.</div>
+            <div>
+                <h1>Accès admin sécurisé pour piloter votre activité.</h1>
+                <p>Connectez-vous pour gérer les prospects, rendez-vous, commentaires et messages depuis un espace structuré et minimaliste.</p>
+            </div>
+            <div class="login-meta">© 2026 Green</div>
+        </section>
+
+        <section class="login-panel">
+            <div class="access-note" title="Accès réservé">
+                <i class="ri-lock-line"></i>
+            </div>
+
+            <h2>Connexion</h2>
+            <p class="subtitle">Saisissez vos identifiants pour accéder au dashboard.</p>
+
+            <form method="POST">
+                {% csrf_token %}
+                {% if next %}
+                <input type="hidden" name="next" value="{{ next }}" class="hidden-next">
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                    <div class="errorlist">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <div class="field">
+                    <label for="{{ form.username.id_for_label }}">Identifiant</label>
+                    <div class="input-wrap">
+                        <i class="ri-user-line"></i>
+                        {{ form.username }}
+                    </div>
+                    {% if form.username.errors %}
+                        <div class="errorlist">{{ form.username.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    <label for="{{ form.password.id_for_label }}">Mot de passe</label>
+                    <div class="input-wrap">
+                        <i class="ri-lock-password-line"></i>
+                        {{ form.password }}
+                    </div>
+                    {% if form.password.errors %}
+                        <div class="errorlist">{{ form.password.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="extra-row">
+                    <span>Accès réservé aux comptes autorisés.</span>
+                    <a href="{% url 'home' %}">Retour au site</a>
+                </div>
+
+                <button type="submit" class="btn-submit">Se connecter</button>
+            </form>
+
+            <p class="login-foot">En continuant, vous acceptez les règles d’accès interne de Green.</p>
+        </section>
+    </main>
+</body>
+</html>

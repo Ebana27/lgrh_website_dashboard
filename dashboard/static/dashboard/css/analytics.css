@@ -1,0 +1,268 @@
+/* Base de la page d'Analyses */
+.analytics-container {
+    padding: 2.5rem 1.5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    font-family: 'Poppins', 'Inter', sans-serif; /* Vos polices de prédilection */
+}
+
+/* En-tête */
+.analytics-header {
+    margin-bottom: 2.5rem;
+}
+
+.analytics-title {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 0.5rem 0;
+}
+
+.analytics-subtitle {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Grille de statistiques principales */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+/* Style de base d'une carte d'indicateur */
+.analytics-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.analytics-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Icônes des cartes */
+.card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+}
+
+/* Thèmes de couleur spécifiques */
+.card-pending-rdv .card-icon {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.card-total-prospects .card-icon {
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+.card-total-messages .card-icon {
+    background-color: #f0fdf4;
+    color: #16a34a;
+}
+
+.card-total-comments .card-icon {
+    background-color: #faf5ff;
+    color: #7c3aed;
+}
+
+/* Contenu textuel de la carte */
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+}
+
+.card-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+    margin: 0.2rem 0;
+}
+
+.card-description {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Layout pour le second niveau (2 colonnes) */
+.analytics-details-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 2rem;
+}
+
+@media (max-width: 600px) {
+    .analytics-details-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Blocs de détails */
+.analytics-detail-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Layout spécifique pour la grille des graphiques */
+.analytics-charts-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+@media (max-width: 500px) {
+    .analytics-charts-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.box-header {
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.box-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* Listes d'analyse */
+.analytics-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.analytics-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed #f1f5f9;
+    gap: 1rem;
+}
+
+.analytics-list-item.align-start {
+    align-items: flex-start;
+}
+
+.analytics-list-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.item-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.item-subtitle {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.item-paragraph {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #475569;
+    margin: 0.25rem 0 0;
+}
+
+.item-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4rem;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    font-weight: 500;
+}
+
+.badge-date {
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+.badge-time {
+    background-color: #f8fafc;
+    color: #94a3b8;
+}
+
+/* Statuts des rendez-vous */
+.status-en_attente {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+.status-confirme {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+.status-annule {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+.status-reporte {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.no-data {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    text-align: center;
+    padding: 2rem 0;
+    margin: 0;
+}

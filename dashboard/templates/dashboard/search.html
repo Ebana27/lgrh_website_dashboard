@@ -1,0 +1,35 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Résultats de recherche{% endblock %}
+
+{% block content %}
+<div style="padding:1rem;">
+  <h2>Résultats pour "{{ q }}"</h2>
+
+  <section>
+    <h3>Prospects</h3>
+    {% if prospects.exists %}
+      <ul>
+        {% for p in prospects %}
+          <li>{{ p.name }} {{ p.lastname }} — {{ p.enterprise_label }} — {{ p.email }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Aucun prospect trouvé.</p>
+    {% endif %}
+  </section>
+
+  <section style="margin-top:1rem;">
+    <h3>Rendez-vous</h3>
+    {% if rdv_results.exists %}
+      <ul>
+        {% for r in rdv_results %}
+          <li>{{ r.date_time }} — {{ r.designation }} ({{ r.prospect.name }} {{ r.prospect.lastname }})</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Aucun rendez-vous trouvé.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

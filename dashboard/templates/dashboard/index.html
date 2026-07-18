@@ -1,0 +1,110 @@
+{% extends 'dashboard/base.html' %}
+{% block title %} | Accueil {% endblock %}
+
+{% block content %}
+<section class="dashboard-hero">
+    <div class="dashboard-hero__intro">
+        <h1>Tableau de bord Green</h1>
+        <p>Lecture rapide de l’activité administrative, des prospects et des rendez-vous à traiter.</p>
+    </div>
+</section>
+
+<section class="dashboard-kpis">
+    <article class="kpi-card">
+        <span class="kpi-label">Rendez-vous en attente</span>
+        <strong class="kpi-value">{{ rdv_attente.count }}</strong>
+    </article>
+    <article class="kpi-card">
+        <span class="kpi-label">Prospects</span>
+        <strong class="kpi-value">{{ total_prospects }}</strong>
+    </article>
+    <article class="kpi-card">
+        <span class="kpi-label">Commentaires</span>
+        <strong class="kpi-value">{{ total_comments }}</strong>
+    </article>
+    <article class="kpi-card">
+        <span class="kpi-label">Messages</span>
+        <strong class="kpi-value">{{ total_messages }}</strong>
+    </article>
+</section>
+
+<section class="dashboard-grid">
+    <article class="dashboard-panel">
+        <div class="dashboard-panel__header">
+            <h2>Derniers rendez-vous</h2>
+            <span class="status-pill">Flux récent</span>
+        </div>
+        <div class="page-table-wrap">
+            <table class="page-table">
+                <thead>
+                    <tr>
+                        <th>Prospect</th>
+                        <th>Entreprise</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rdv in recent_rdvs %}
+                    <tr>
+                        <td>
+                            <strong>{{ rdv.prospect.name }} {{ rdv.prospect.lastname }}</strong>
+                            <div class="page-muted">{{ rdv.designation }}</div>
+                        </td>
+                        <td>{{ rdv.prospect.enterprise_label }}</td>
+                        <td>{{ rdv.date_time|date:"d M Y, H:i" }}</td>
+                        <td>
+                            <span class="status status-{{ rdv.statut|default:'en_attente' }}">{{ rdv.get_statut_display }}</span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="page-empty">Aucun rendez-vous disponible.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </article>
+
+    <aside class="dashboard-stack">
+        <article class="dashboard-panel">
+            <div class="dashboard-panel__header">
+                <h3>Navigation rapide</h3>
+            </div>
+            <div class="dashboard-panel__body quick-actions-box">
+                <a class="quick-action-btn" href="{% url 'dashboard:analytics' %}"><i class="ri-bar-chart-line"></i> Analyses</a>
+                <a class="quick-action-btn" href="{% url 'dashboard:meet' %}"><i class="ri-calendar-check-line"></i> Rendez-vous</a>
+                <a class="quick-action-btn" href="{% url 'dashboard:prospects' %}"><i class="ri-user-line"></i> Prospects</a>
+                <a class="quick-action-btn" href="{% url 'dashboard:comments' %}"><i class="ri-message-3-line"></i> Commentaires</a>
+            </div>
+        </article>
+
+        <article class="dashboard-panel">
+            <div class="dashboard-panel__header">
+                <h3>Rendez-vous à valider</h3>
+            </div>
+            <div class="dashboard-panel__body">
+                {% if rdv_attente %}
+                <ul class="summary-list">
+                    {% for rdv in rdv_attente|slice:":4" %}
+                    <li class="summary-list__item">
+                        <div>
+                            <strong>{{ rdv.prospect.name }} {{ rdv.prospect.lastname }}</strong>
+                            <span>{{ rdv.prospect.enterprise_label }}</span>
+                        </div>
+                        <div class="summary-meta">
+                            <div>{{ rdv.date_time|date:"d M" }}</div>
+                            <div>{{ rdv.date_time|date:"H:i" }}</div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="page-muted">Aucun rendez-vous en attente pour le moment.</p>
+                {% endif %}
+            </div>
+        </article>
+    </aside>
+</section>
+{% endblock %}

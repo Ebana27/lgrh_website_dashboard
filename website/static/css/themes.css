@@ -1,0 +1,377 @@
+/* ==========================================================================
+   THÈME & VARIABLES GLOBALES
+   ========================================================================== */
+
+@import url('./pages/index.css');
+
+:root {
+    /* Palette ultra-minimaliste */
+    --primary-color: #000000;         /* Le noir devient la couleur principale */
+    --background-color: #f8f8f8;      /* Gris clair très épuré */
+    --text-color: #1f1e1e;            /* Texte principal noir/anthracite */
+    --text-muted: #707070;            /* Texte secondaire / liens inactifs */
+    --line: #E0E0E0;
+    --green: #00ca33;
+    --accent-color: #00ca33;
+    --gray: #383838;                  /* Gris pour les fonds secondaires */   
+
+    /* Bouton principal */
+    --btn-bg: #000000; 
+    --btn-text: #ffffff;
+
+    /* Typographie & Paramètres */
+    --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    --header-height: 70px;            /* Ajusté pour un alignement vertical parfait */
+}
+
+/* ==========================================================================
+   RESET & SQUELETTE DE BASE
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-fast);
+}
+
+/* ==========================================================================
+   BOUTONS PLATEFORME (Style Minimaliste)
+   ========================================================================== */
+.btn {
+    font-family: var(--font-main);
+    background-color: var(--btn-bg);
+    /*Noirdèsledébut*/color: var(--btn-text);
+    /*Écritenblanc*/padding: 5px 10px;
+    border: none;
+    border-radius: 0px;
+    /*Rectanglenetsansaucunarrondi*/cursor: pointer;
+    font-size: 11pt;
+    /*Typographiefine*/font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: background-color var(--transition-fast), transform 0.1s ease;
+    -webkit-transition: background-color var(--transition-fast), transform 0.1s ease;
+    -moz-transition: background-color var(--transition-fast), transform 0.1s ease;
+    -ms-transition: background-color var(--transition-fast), transform 0.1s ease;
+    -o-transition: background-color var(--transition-fast), transform 0.1s ease;
+}
+
+.btn:hover {
+    background-color: var(--green);
+}
+
+.btn:active {
+    transform: scale(0.98);           /* Retour tactile discret */
+}
+
+/* ==========================================================================
+   HEADER & NAVIGATION MULTI-ÉTATS (Texte fixe, fond dynamique)
+   ========================================================================== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background-color: transparent;    /* Aucun fond au démarrage */
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    transition: background-color var(--transition-fast), border-bottom var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* ÉTAT SCROLLÉ : Ajoute simplement le fond et l'ombrage discret */
+.header.scrolled {
+    background-color: #ffffff;        /* Le fond blanc se rajoute au scroll */
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.02);
+    border-bottom: 1px solid rgba(0, 202, 51, 0.12);
+}
+
+.header-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Bloc Logo (Reste constant) */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--text-color);         /* Toujours noir */
+}
+
+.logo img {
+    height: 24px;
+    width: auto;
+}
+
+/* Menu de Navigation (Reste constant) */
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    list-style: none;
+}
+
+.nav-link {
+    font-size: 11pt;
+    font-weight: 400;
+    color: var(--text-muted);         /* Gris neutre par défaut */
+    transition: color var(--transition-fast), font-weight var(--transition-fast);
+}
+
+.nav-link:hover, 
+.nav-link.active {
+    color: var(--green);              /* Accent vert discret */
+    font-weight: 600;
+}
+
+/* Bloc Droite */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+/* ==========================================================================
+   SÉLECTEUR DE LANGUE DYNAMIQUE (Texte toujours noir)
+   ========================================================================== */
+.lang-selector-container {
+    position: relative;
+    display: inline-block;
+}
+
+.lang-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11pt;
+    font-weight: 500;
+    color: var(--text-color);         /* Toujours noir */
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background-color var(--transition-fast);
+}
+
+.lang-selector:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Ajustement des icônes de drapeaux */
+.lang-selector .fi, 
+.lang-dropdown .fi {
+    width: 18px;
+    height: 13px;
+    border-radius: 1px;
+    box-shadow: 0 0 1px rgba(0,0,0,0.2);
+}
+
+.lang-selector .arrow {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: transform var(--transition-fast);
+}
+
+/* Menu déroulant géré par la classe .show injectée en JS */
+.lang-dropdown {
+    display: none;                    /* Caché par défaut */
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    background-color: #ffffff;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    padding: 6px;
+    min-width: 130px;
+    z-index: 1010;
+}
+
+/* Classe d'activation au clic */
+.lang-dropdown.show {
+    display: block;
+}
+
+/* Rotation fluide de la flèche Remixicon */
+.lang-dropdown.show ~ .lang-selector .arrow {
+    transform: rotate(180deg);
+}
+
+/* Liens internes du menu */
+.lang-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 10.5pt;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: background-color var(--transition-fast);
+}
+
+.lang-item:hover {
+    background-color: #f5f5f5;
+}
+
+.lang-item.active {
+    background-color: rgba(0, 202, 51, 0.08); /* Teinte subtile de vert pour l'élément actif */
+    color: #00aa2b;
+    font-weight: 600;
+}
+
+.logo span {
+    position: relative;
+}
+
+.logo span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background: var(--green);
+    opacity: 0.65;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 20px;
+    }
+    .nav-menu {
+        display: none;                /* Masqué sur mobile par défaut */
+    }
+}
+
+/* Footer style */
+
+footer {
+    background-color: var(--background-color);
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    font-size: 9pt;
+    color: #707070;
+}   
+
+.site-nav-toggle {
+    display: none;
+}
+
+.nav-toggle-btn {
+    display: none;
+}
+
+.nav-backdrop {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 16px;
+        gap: 12px;
+    }
+
+    .header-right {
+        gap: 12px;
+    }
+
+    .nav-toggle-btn {
+        width: 42px;
+        height: 42px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        background: #ffffff;
+        color: var(--text-color);
+        cursor: pointer;
+        transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+    }
+
+    .nav-toggle-btn:hover {
+        background: rgba(0, 0, 0, 0.03);
+        border-color: rgba(0, 0, 0, 0.18);
+    }
+
+    .header nav {
+        position: fixed;
+        top: var(--header-height);
+        right: 0;
+        width: min(84vw, 320px);
+        height: calc(100dvh - var(--header-height));
+        background: #ffffff;
+        border-left: 1px solid var(--line);
+        box-shadow: -24px 0 60px rgba(0, 0, 0, 0.12);
+        transform: translateX(105%);
+        transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 950;
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .nav-menu .nav-link {
+        display: block;
+        padding: 12px 0;
+    }
+
+    .site-nav-toggle:checked ~ .header nav {
+        transform: translateX(0);
+    }
+
+    .site-nav-toggle:checked ~ .nav-backdrop {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .nav-backdrop {
+        display: block;
+        position: fixed;
+        inset: var(--header-height) 0 0 0;
+        background: rgba(0, 0, 0, 0.38);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--transition-fast);
+        z-index: 900;
+    }
+
+    .header-right .btn {
+        display: none;
+    }
+}

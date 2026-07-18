@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Merci - Green</title>
+    <!-- Chargement de la bibliothèque confettis -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <style>
+        /* Reset et style global */
+        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #ffffff; }
+        
+        /* Conteneur */
+        .thank-you-container {
+            max-width: 600px;
+            padding: 60px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .titre { font-size: 2rem; font-weight: 700; color: #000; letter-spacing: -0.03em; margin-bottom: 20px; }
+        p { color: #64748b; line-height: 1.6; margin-bottom: 40px; }
+
+        .btn-home {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 0;
+            transition: background 0.2s;
+        }
+        .btn-home:hover { background: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="thank-you-container">
+        <h1 class="titre">Merci pour votre message, <h1 style="color: green;"> {{ name }} !</h1></h1>
+        <p>Nous avons bien reçu votre demande et nous vous répondrons dans les plus brefs délais.</p>
+        <a href="{% url 'home' %}" class="btn-home">Retour à l'accueil</a>
+    </div>
+
+    <script>
+        // Déclenchement des confettis au chargement de la page
+        window.onload = () => {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#000000', '#43eb10'] // Noir et ton bleu Green
+            });
+        };
+    </script>
+</body>
+</html>

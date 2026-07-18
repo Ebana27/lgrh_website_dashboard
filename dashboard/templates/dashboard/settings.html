@@ -1,0 +1,85 @@
+{% extends 'dashboard/base.html' %}
+{% block title %} | Paramètres {% endblock %}
+
+{% block content %}
+<section class="dashboard-hero">
+    <div class="dashboard-hero__intro">
+        <h1>Paramètres du compte</h1>
+        <p>Gérez ici votre accès administratif et mettez à jour votre mot de passe.</p>
+    </div>
+</section>
+
+{% if messages %}
+    <div class="settings-alerts">
+        {% for message in messages %}
+            <div class="settings-alert settings-alert--{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<section class="settings-grid">
+    <article class="dashboard-panel">
+        <div class="dashboard-panel__header">
+            <h2>Sécurité</h2>
+            <span class="status-pill">Accès protégé</span>
+        </div>
+        <div class="dashboard-panel__body">
+            <div class="settings-summary">
+                <div>
+                    <span class="settings-label">Utilisateur</span>
+                    <strong>{{ request.user.get_username }}</strong>
+                </div>
+                <div>
+                    <span class="settings-label">Rôle</span>
+                    <strong>{% if request.user.is_staff %}Administrateur{% else %}Utilisateur{% endif %}</strong>
+                </div>
+                <div>
+                    <span class="settings-label">Connexion</span>
+                    <strong>{% if request.user.is_authenticated %}Active{% else %}Inactive{% endif %}</strong>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <article class="dashboard-panel">
+        <div class="dashboard-panel__header">
+            <h2>Changer le mot de passe</h2>
+        </div>
+        <div class="dashboard-panel__body">
+            <form method="post" class="settings-form">
+                {% csrf_token %}
+
+                {% if password_form.non_field_errors %}
+                    <div class="settings-errors">{{ password_form.non_field_errors }}</div>
+                {% endif %}
+
+                <div class="field">
+                    <label for="{{ password_form.old_password.id_for_label }}">Mot de passe actuel</label>
+                    {{ password_form.old_password }}
+                    {% if password_form.old_password.errors %}
+                        <div class="settings-errors">{{ password_form.old_password.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    <label for="{{ password_form.new_password1.id_for_label }}">Nouveau mot de passe</label>
+                    {{ password_form.new_password1 }}
+                    {% if password_form.new_password1.errors %}
+                        <div class="settings-errors">{{ password_form.new_password1.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    <label for="{{ password_form.new_password2.id_for_label }}">Confirmer le nouveau mot de passe</label>
+                    {{ password_form.new_password2 }}
+                    {% if password_form.new_password2.errors %}
+                        <div class="settings-errors">{{ password_form.new_password2.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn-submit-settings">Mettre à jour</button>
+            </form>
+        </div>
+    </article>
+</section>
+{% endblock %}

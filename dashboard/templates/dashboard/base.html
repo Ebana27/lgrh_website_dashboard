@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titre %}Dashboard Green{% endblock %}</title>
+    <link rel="icon" href="{% static 'img/svg/logo.svg' %}" type="image/svg+xml" sizes="any">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'dashboard/css/global.css' %}">
+</head>
+<body>
+
+    <input type="checkbox" id="toggle-menu" class="menu-checkbox">
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="text-link">Green.</span>
+                </div>
+                <label for="toggle-menu" class="toggle-btn">
+                    <span class="arrow"><i class="ri-sidebar-fold-line"></i></span>
+                </label>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="{% url 'dashboard:home' %}" class="menu-item {% if active_page == 'home' %}active{% endif %}">
+                    <span class="icon"><i class="ri-home-line"></i></span>
+                    <span class="text-link">Vue d'ensemble</span>
+                </a>
+                <a href="{% url 'dashboard:analytics' %}" class="menu-item {% if active_page == 'analytics' %}active{% endif %}">
+                    <span class="icon"><i class="ri-bar-chart-line"></i></span>
+                    <span class="text-link">Analyses</span>
+                </a>
+                <a href="{% url 'dashboard:meet' %}" class="menu-item {% if active_page == 'meet' %}active{% endif %}">
+                    <span class="icon"><i class="ri-calendar-check-line"></i></span>
+                    <span class="text-link">Rendez-vous</span>
+                    {% if pending_rdv_count %}
+                        <span class="menu-badge" title="{{ pending_rdv_count }} rendez-vous en attente"></span>
+                    {% endif %}
+                </a>
+                <a href="{% url 'dashboard:prospects' %}" class="menu-item {% if active_page == 'prospects' %}active{% endif %}">
+                    <span class="icon"><i class="ri-user-line"></i></span>
+                    <span class="text-link">Prospects</span>
+                </a>
+                <a href="{% url 'dashboard:comments' %}" class="menu-item {% if active_page == 'comments' %}active{% endif %}">
+                    <span class="icon"><i class="ri-message-3-line"></i></span>
+                    <span class="text-link">Commentaires</span>
+                </a>
+                <a href="{% url 'dashboard:messages' %}" class="menu-item {% if active_page == 'messages' %}active{% endif %}">
+                    <span class="icon"><i class="ri-mail-line"></i></span>
+                    <span class="text-link">Messages</span>
+                </a>
+                <a href="{% url 'dashboard:settings' %}" class="menu-item {% if active_page == 'settings' %}active{% endif %}">
+                    <span class="icon"><i class="ri-settings-line"></i></span>
+                    <span class="text-link">Paramètres</span>
+                </a>
+            </nav>
+        </aside>
+
+        <div class="main-shell">
+            <header class="site-header">
+                <div class="header-left">
+                    <label for="toggle-menu" class="mobile-menu-btn" aria-label="Ouvrir la sidebar">
+                        <i class="ri-menu-3-line"></i>
+                    </label>
+                    <h3 class="breadcrumb">DASHBOARD</h3>
+                </div>
+                <div class="header-actions">
+
+                    <form class="search-wrap" action="{% url 'dashboard:search' %}" method="get">
+                        <i class="ri-search-line" style="color:var(--text-muted)"></i>
+                        <input type="search" name="q" placeholder="Rechercher..." aria-label="Rechercher">
+                    </form>
+
+                    <a href="{% url 'home' %}" class="btn-nav" title="Retour au site">
+                        <i class="ri-global-line"></i>
+                    </a>
+                </div>
+            </header>
+
+            <main class="main-content" style="padding: 24px;">
+                {% block content %}
+                {% endblock %}
+            </main>
+        </div>
+    </div>
+    <label for="toggle-menu" class="sidebar-backdrop" aria-hidden="true"></label>
+
+    <script>
+        (function() {
+            const sidebarToggle = document.getElementById('toggle-menu');
+            const sidebarLinks = document.querySelectorAll('.sidebar-menu .menu-item');
+            if (sidebarToggle) {
+                sidebarToggle.checked = false;
+            }
+            sidebarLinks.forEach((link) => {
+                link.addEventListener('click', () => {
+                    if (window.matchMedia('(max-width: 960px)').matches && sidebarToggle) {
+                        sidebarToggle.checked = false;
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

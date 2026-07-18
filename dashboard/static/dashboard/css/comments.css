@@ -1,0 +1,97 @@
+/* ==========================================================================
+   COMMENTS STYLESHEET (comments.css)
+   ========================================================================== */
+
+/* Carte principale de la section */
+.section-card {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+    margin-bottom: 24px;
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.section-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.section-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+/* Structure du tableau des commentaires */
+.comments-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.comments-table th {
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.comments-table td {
+    padding: 16px;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+/* Suppression de la bordure du dernier élément */
+.comments-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Effet au survol des lignes */
+.comments-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.comments-table tbody tr:hover {
+    background-color: var(--bg-dashboard);
+}
+
+/* Alignement et structure de la colonne Prospect (Nom & Prénom) */
+.comments-table td:nth-child(1) {
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--text-main);
+}
+
+/* Gestion du retour à la ligne pour le texte du commentaire */
+.comments-table td:nth-child(2) {
+    color: var(--text-main);
+    max-width: 450px;
+    line-height: 1.6;
+    word-break: break-word;
+}
+
+/* Mise en forme de la date */
+.comments-table td:nth-child(3) {
+    white-space: nowrap;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* État vide si aucun commentaire */
+.comments-table .empty-state {
+    text-align: center;
+    padding: 48px 16px !important;
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.95rem;
+}

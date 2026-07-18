@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page introuvable</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f4f7fb;
+            --surface: rgba(255, 255, 255, 0.82);
+            --surface-border: rgba(148, 163, 184, 0.2);
+            --text: #0f172a;
+            --muted: #64748b;
+            --accent: #71d81d;
+            --accent-hover: #1eaf31;
+            --shadow: 0 24px 80px rgba(15, 23, 42, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 640px;
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+            padding: clamp(2rem, 5vw, 3.5rem);
+            border: 1px solid var(--surface-border);
+            border-radius: 28px;
+            background: var(--surface);
+            backdrop-filter: blur(18px);
+            text-align: center;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.05);
+            color: var(--muted);
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .code {
+            margin: 0;
+            font-size: clamp(4rem, 15vw, 8rem);
+            line-height: 0.9;
+            letter-spacing: -0.06em;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        h1 {
+            margin: 1rem 0 0.75rem;
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+        }
+
+        p {
+            margin: 0 auto;
+            max-width: 32rem;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.85rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 0.85rem 1.25rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(100, 116, 139, 0.22);
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(100, 116, 139, 0.35);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .hint {
+            margin-top: 1.5rem;
+            font-size: 0.925rem;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                border-radius: 22px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="wrapper">
+        <section class="card" aria-labelledby="page-title">
+            <div class="content">
+                <div class="eyebrow">Erreur 404</div>
+                <p class="code">404</p>
+                <h1 id="page-title">Page introuvable</h1>
+                <p>
+                    La page que vous recherchez n'existe pas, a ete deplacee, ou le lien est peut-etre incorrect.
+                </p>
+                <div class="actions">
+                    <a class="btn btn-primary" href="/">Retour a l'accueil</a>
+                    <a class="btn btn-secondary" href="javascript:history.back()">Page precedente</a>
+                </div>
+                <div class="hint">Si le probleme persiste, verifiez l'URL ou revenez a l'accueil.</div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
